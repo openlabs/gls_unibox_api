@@ -41,3 +41,6 @@ output/*/index.html
 
 # Sphinx
 docs/_build
+
+# Ignore the test settings file which should never be committed
+tests/test_settings.sh

@@ -23,6 +23,8 @@ ch = logging.StreamHandler()
 ch.setLevel(logging.DEBUG)
 logger.addHandler(ch)
 
+os_env = os.environ
+
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
@@ -114,7 +116,11 @@ class TestFields:
 
 @pytest.fixture
 def client():
-    return Client('217.7.25.136', '3030', test=True)
+    return Client(
+        os_env['GLS_SERVER'],
+        os_env['GLS_PORT'],
+        test=True
+    )
 
 
 @pytest.fixture
@@ -132,28 +138,35 @@ def shipment(client):
     shipment.parcel_weight = Decimal('31.5')
     shipment.shipping_date = date.today()
 
-    shipment.consignor.customer_number = 12
-    shipment.consignor.name = 'GLS IT Services GmbH'
-    shipment.consignor.name2 = 'Project Management'
-    shipment.consignor.street = 'GLS-Germany-Str, 1-7'
+    shipment.consignor.customer_number = 15082
+    shipment.consignor.name = 'Fruchtzentrale Orkos'
+    shipment.consignor.name2 = 'Grossmarkt Essen'
+    shipment.consignor.name3 = 'Halle VI'
+    shipment.consignor.street = 'Luetzowstr. 28a'
     shipment.consignor.country = 'DE'
-    shipment.consignor.zip = '36286'
-    shipment.consignor.place = 'Neuenstein'
+    shipment.consignor.zip = '45141'
+    shipment.consignor.place = 'Dortmund'
     shipment.consignor.label = 'Empfanger'
+    shipment.consignor.consignor = 'Essen'
 
     shipment.consignee.customer_number_label = 'Kd-Nr'
-    shipment.consignee.customer_number = 10166
+    shipment.consignee.customer_number = 4600
     shipment.consignee.id_type = 'ID-Nr'
     shipment.consignee.id_value = 800018406
 
     shipment.consignee.salutation = 'Firma'
     shipment.consignee.name = 'GLS Germany'
-    shipment.consignee.name2 = 'GmbH & Co. KG'
-    shipment.consignee.street = 'Am Sulzenbruckener Weg'
-    shipment.consignee.place = 'Ichtershausen'
+    shipment.consignee.name2 = 'Depot 46'
+    shipment.consignee.street = 'Huckarder Str. 91'
+    shipment.consignee.place = 'Dortmund'
+    shipment.consignee.zip = '44147'
 
     shipment.parcel = 1
     shipment.quantity = 1
+
+    shipment.gls_contract = os_env['GLS_CONTRACT']
+    shipment.gls_customer_id = os_env['GLS_CUSTOMER_ID']
+    shipment.location = os_env['GLS_LOCATION']
 
     return shipment
 
