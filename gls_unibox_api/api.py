@@ -109,12 +109,18 @@ class Client(object):
         s = self.get_socket_conn()
         s.sendall(values)
 
-        data = s.recv(1024)
+        response = ''
+        while True:
+            data = s.recv(1024)
+            response += data
+            if not data:
+                break
+
         s.close()
 
-        logger.debug('Response::values::%s', data)
+        logger.debug('Response::values::%s', response)
 
-        return data
+        return response
 
 
 class CommonMixin(object):
@@ -170,7 +176,7 @@ class Shipment(ShipmentMixin, CommonMixin):
         self.values = {}
 
         if self.client.test:
-            self.special_functions = ['NOPRINT', 'NOSAVE']
+            self.special_functions = ['NOSAVE']
 
     def get_tags(self):
         """
