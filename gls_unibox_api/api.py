@@ -15,6 +15,11 @@ class SoftwareInformation(fields.FieldGroup):
     name = fields.Char('T050', length=20)
     version = fields.Char('T051', length=20)
 
+    def __init__(self, *args, **kwargs):
+        super(SoftwareInformation, self).__init__(*args, **kwargs)
+
+        self.values = {}
+
 
 class ServiceData(fields.FieldGroup):
     """
@@ -30,6 +35,11 @@ class ServiceData(fields.FieldGroup):
     service_flag = fields.Char('T207', length=3)
     incoterms = fields.Int('T210', length=2)
 
+    def __init__(self, *args, **kwargs):
+        super(ServiceData, self).__init__(*args, **kwargs)
+
+        self.values = {}
+
 
 class PickUpAddress(fields.FieldGroup):
     """
@@ -44,9 +54,19 @@ class PickUpAddress(fields.FieldGroup):
     place = fields.Char('T906', length=50)
     phone = fields.Char('T907', length=15)
 
+    def __init__(self, *args, **kwargs):
+        super(PickUpAddress, self).__init__(*args, **kwargs)
+
+        self.values = {}
+
 
 class PickUp(fields.FieldGroup):
     date = fields.Date('T908', separator='.')
+
+    def __init__(self, *args, **kwargs):
+        super(PickUp, self).__init__(*args, **kwargs)
+
+        self.values = {}
 
 
 class Consignor(fields.FieldGroup):
@@ -63,6 +83,11 @@ class Consignor(fields.FieldGroup):
     place = fields.Char('T864', length=30)
 
     label = fields.Char('T850')
+
+    def __init__(self, *args, **kwargs):
+        super(Consignor, self).__init__(*args, **kwargs)
+
+        self.values = {}
 
 
 class Consignee(fields.FieldGroup):
@@ -85,6 +110,11 @@ class Consignee(fields.FieldGroup):
     # Defined out of range
     zip = fields.Char('T330', length=10)
     country = fields.Char('T100', length=2)
+
+    def __init__(self, *args, **kwargs):
+        super(Consignee, self).__init__(*args, **kwargs)
+
+        self.values = {}
 
 
 class Client(object):
@@ -170,6 +200,7 @@ class Shipment(ShipmentMixin, CommonMixin):
     Return an instance of the shipment class
     """
     def __init__(self, client):
+
         self.client = client
 
         # Initialize the values holder
