@@ -1,0 +1,11 @@
+machine:
+  python:
+    version: 2.7.5
+dependencies:
+  pre:
+    - pip install flake8 pytest
+test:
+  override:
+    - py.test tests
+  post:
+    - flake8 .

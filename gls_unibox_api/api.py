@@ -166,6 +166,7 @@ class CommonMixin(object):
     #: * NOSAVE - For prechecking or testing, where neither the storing or
     #:   printing of the label happens.
     special_functions = fields.MultipleChoice('T090')
+    printer_name = fields.Char('T021', length=25)
 
 
 class ShipmentMixin(object):
@@ -265,11 +266,19 @@ class Response(ShipmentMixin, CommonMixin):
         """
         values = {}
 
-        for pair in string.replace(
+        start_tag_position = string.find(StartTag.code)
+
+        # Content upto the start tag is the zpl content, followed by the tags
+        zpl_content = string[:start_tag_position]
+        gls_tags = string[start_tag_position:]
+
+        for pair in gls_tags.replace(
                 StartTag.code, '').replace(EndTag.code, '').split('|'):
             if ':' not in pair:
                 continue
             tag, value = pair.split(':', 1)
             values[tag] = value
+
+        values['zpl_content'] = zpl_content
 
         return cls(values)
