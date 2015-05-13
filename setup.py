@@ -37,7 +37,7 @@ class PyTest(TestCommand):
 
 setup(
     name='gls_unibox_api',
-    version='0.0.1.1',
+    version='0.0.1.2',
     description="Python API for GLS Unibox Logistics System",
     long_description=readme + '\n\n' + history,
     author="Sharoon Thomas",
