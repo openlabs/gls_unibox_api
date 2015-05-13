@@ -131,6 +131,7 @@ def shipment(client):
     # The values are based on Standard Shipment example in docs 3.5.6
     shipment.software.name = 'Python'
     shipment.software.version = '2.7'
+    shipment.printer_name = 'zebrazpl200'
 
     shipment.consignee.country = 'DE'
     shipment.consignee.zip = '99334'
@@ -162,7 +163,7 @@ def shipment(client):
     shipment.consignee.zip = '44147'
 
     shipment.parcel = 1
-    shipment.quantity = 1
+    shipment.quantity = 2
 
     shipment.gls_contract = os_env['GLS_CONTRACT']
     shipment.gls_customer_id = os_env['GLS_CUSTOMER_ID']
@@ -186,3 +187,4 @@ class TestResponse:
         )
         assert response.consignee.name == u'GLS Germany'
         assert response.shipping_date == date(2009, 1, 26)
+        assert response.values['zpl_content']
